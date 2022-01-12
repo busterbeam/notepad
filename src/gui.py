@@ -2,10 +2,8 @@ import tkinter as tk
 from tkinter.filedialog import askopenfilename, asksaveasfilename
 from ctypes import windll
 
-#high quality font
+# high quality font
 windll.shcore.SetProcessDpiAwareness(1)
-
-
 
 
 def makeIndent(indent_length=4):
@@ -62,15 +60,18 @@ def leave_specified_text(good_words):
             if any(good_word in line for good_word in good_words):
                 newfile.write(line)
 
+
 root = tk.Tk()
 root.title('Text Editor')
 root.rowconfigure(0, minsize=500, weight=1)
 root.columnconfigure(1, minsize=500, weight=1)
+
+# text editor
 text_editor = tk.Text(root, foreground="#00FFFF", background="#000000")
 
-
 # menu
-menubar = tk.Menu(root)
+menubar = tk.Menu(root, foreground="#00FFFF",
+                  background="#000000", activebackground="#000000",)
 function_list = tk.Menu(menubar, tearoff=0, foreground="#00FFFF", background="#000000")
 menubar.add_cascade(label="Function", menu=function_list)
 root.config(menu=menubar)
