@@ -1,6 +1,8 @@
 import tkinter as tk
 from tkinter.filedialog import askopenfilename, asksaveasfilename
 from ctypes import windll
+import keypress_sound
+import threading
 
 # high quality font
 windll.shcore.SetProcessDpiAwareness(1)
@@ -61,24 +63,34 @@ def leave_specified_text(good_words):
                 newfile.write(line)
 
 
+def start_key_press_sound():
+    thread = threading.Thread(target=keypress_sound.start)
+    thread.start()
+
+
+#root
 root = tk.Tk()
 root.title('Text Editor')
 root.rowconfigure(0, minsize=500, weight=1)
 root.columnconfigure(1, minsize=500, weight=1)
+root.attributes("-alpha", 0.5)
 
 # text editor
-text_editor = tk.Text(root, foreground="#00FFFF", background="#000000")
+text_editor = tk.Text(root, foreground="#00FFFF",background="#000000", font=("Courier", 15))
+text_editor.grid(row=0, column=1, sticky="nsew")
 
 # menu
 menubar = tk.Menu(root, foreground="#00FFFF",
                   background="#000000", activebackground="#000000",)
-function_list = tk.Menu(menubar, tearoff=0, foreground="#00FFFF", background="#000000")
+function_list = tk.Menu(
+    menubar, tearoff=0, foreground="#00FFFF", background="#000000")
 menubar.add_cascade(label="Function", menu=function_list)
 root.config(menu=menubar)
+
 
 function_list.add_command(label="Open", command=open_text)
 function_list.add_command(label="Save", command=file_save)
 function_list.add_command(label="MakeIndent", command=makeIndent)
 
-text_editor.grid(row=0, column=1, sticky="nsew")
+start_key_press_sound()
 root.mainloop()
