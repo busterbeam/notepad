@@ -9,16 +9,18 @@ windll.shcore.SetProcessDpiAwareness(1)
 
 
 def makeIndent(indent_length=4):
-    text = text_editor.get("1.0", tk.END)
-    lines = text.split("\n")
+    lines = text_editor.get("1.0", "end").split("\n")
     new_data = ""
-    for index in range(len(lines)):
-        lines[index] = " " * indent_length + lines[index] + "\n"
-        new_data += lines[index]
+    for line in lines:
+        new_data += (' ' * indent_length) + line + "\n"
 
     change_text_of_text_editor(new_data)
 
 # delete -> new data
+
+def return_indent(indent_size : int):
+    return " " * indent_size
+
 
 
 def change_text_of_text_editor(text):
@@ -66,6 +68,8 @@ def leave_specified_text(good_words):
 def start_key_press_sound():
     thread = threading.Thread(target=keypress_sound.start)
     thread.start()
+
+
 
 
 #root
